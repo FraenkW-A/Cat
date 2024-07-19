@@ -1,0 +1,99 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RegistrationForm extends JFrame implements ActionListener {
+    private JTextField nameField, mobileField, addressField;
+    private JRadioButton maleButton, femaleButton;
+    private JComboBox<String> dayBox, monthBox, yearBox;
+    private JButton submitButton, resetButton;
+    private ButtonGroup genderGroup;
+
+    public RegistrationForm() {
+        setTitle("Registration Form");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(9, 2));
+        
+        add(new JLabel("Name:"));
+        nameField = new JTextField();
+        add(nameField);
+
+        add(new JLabel("Mobile:"));
+        mobileField = new JTextField();
+        add(mobileField);
+
+        add(new JLabel("Gender:"));
+        maleButton = new JRadioButton("Male");
+        femaleButton = new JRadioButton("Female");
+        genderGroup = new ButtonGroup();
+        genderGroup.add(maleButton);
+        genderGroup.add(femaleButton);
+        add(maleButton);
+        add(femaleButton);
+
+        add(new JLabel("DOB:"));
+        dayBox = new JComboBox<>(createDaysArray());
+        monthBox = new JComboBox<>(createMonthsArray());
+        yearBox = new JComboBox<>(createYearsArray(1990, 2019));
+        add(dayBox);
+        add(monthBox);
+        add(yearBox);
+
+        add(new JLabel("Address:"));
+        addressField = new JTextField();
+        add(addressField);
+
+        submitButton = new JButton("Submit");
+        resetButton = new JButton("Reset");
+        add(submitButton);
+        add(resetButton);
+
+        submitButton.addActionListener(this);
+        resetButton.addActionListener(this);
+
+        setVisible(true);
+    }
+
+    private String[] createDaysArray() {
+        String[] days = new String[31];
+        for (int i = 0; i < 31; i++) {
+            days[i] = Integer.toString(i + 1);
+        }
+        return days;
+    }
+
+    private String[] createMonthsArray() {
+        return new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    }
+
+    private String[] createYearsArray(int startYear, int endYear) {
+        int length = endYear - startYear + 1;
+        String[] years = new String[length];
+        for (int i = 0; i < length; i++) {
+            years[i] = Integer.toString(startYear + i);
+        }
+        return years;
+    }
+
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submitButton) {
+
+        } else if (e.getSource() == resetButton) {
+
+            nameField.setText("");
+            mobileField.setText("");
+            genderGroup.clearSelection();
+            dayBox.setSelectedIndex(0);
+            monthBox.setSelectedIndex(0);
+            yearBox.setSelectedIndex(0);
+            addressField.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(RegistrationForm::new);
+    }
+}
